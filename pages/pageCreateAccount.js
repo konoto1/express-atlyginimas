@@ -1,6 +1,7 @@
 import { footer } from "../components/footer.js";
 import { head } from "../components/head.js";
 import { header } from "../components/header.js";
+import { accountsData } from "../data/accountsData.js";
 
 export function pageCreateAccount() {
     const date = new Date();
@@ -20,7 +21,7 @@ export function pageCreateAccount() {
                 <form class="form" action="" method="">
                     <div class="form-row">
                         <label for="name">Vardas</label>
-                        <input id="name" type="text" />
+                        <input id="name" type="text"/>
                     </div>
                     <div class="form-row">
                         <label for="date">Isidarbinimo data</label>
@@ -28,7 +29,7 @@ export function pageCreateAccount() {
                     </div>
                     <div class="form-row">
                         <label for="money">Valandinis</label>
-                        <input id="money" type="number" min="0" max="9999" value="5" step="0.01"/>
+                        <input id="money" type="number" min="0" max="9999" value="5.00" step="0.01"/>
                     </div>
                     <div class="form-row">
                         <button type="submit">Registruoti</button>
@@ -36,6 +37,8 @@ export function pageCreateAccount() {
                 </form>
             </main>
             ${footer()}
+
+            <script src="/js/create-account.js" type="module"></script>
         </body>
         </html>
     `;

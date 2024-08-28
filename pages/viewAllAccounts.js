@@ -1,8 +1,13 @@
 import { footer } from "../components/footer.js";
 import { head } from "../components/head.js";
 import { header } from "../components/header.js";
+import { accountsData } from "../data/accountsData.js";
+
+
 
 export function pageViewAllAccounts() {
+
+
     return `
         <!DOCTYPE html>
         <html lang="en">
@@ -10,7 +15,10 @@ export function pageViewAllAccounts() {
         <body>
            ${header('/accounts')}
             <main>
+                <div class="flex">
                 <h1>Visos paskyros</h1>
+                <a class="btn" href="/create-account">+ Nauja</a>
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -22,39 +30,19 @@ export function pageViewAllAccounts() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Jonas</td>
-                            <td>2020-01-01</td>
-                            <td>5</td>
-                            <td>---</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Maryte</td>
-                            <td>2021-01-01</td>
-                            <td>6</td>
-                            <td>---</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Petras</td>
-                            <td>2022-01-01</td>
-                            <td>7</td>
-                            <td>---</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Ona</td>
-                            <td>2023-01-01</td>
-                            <td>8</td>
-                            <td>---</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </main>
-          ${footer()}
-        </body>
-        </html>
-    `;
+                    ${accountsData.map((item, index) => `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.date}</td>
+                        <td>${item.rate}</td>
+                        <td>${item.salary}</td>
+                    </tr>`).join('')}
+                    </tbody >
+                </table >
+            </main >
+        ${footer()}
+        </body >
+        </html >
+        `;
 };

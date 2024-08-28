@@ -4,11 +4,34 @@ import { page404 } from './pages/page404.js';
 import { pageAbout } from './pages/pageAbout.js';
 import { pageViewAllAccounts } from './pages/viewAllAccounts.js';
 import { pageCreateAccount } from './pages/pageCreateAccount.js';
+import { accountsData } from './data/accountsData.js';
 
 const app = express();
 const port = 5018;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('static'));
+
+
+app.use((req, res, next) => {
+    console.log('>>>', req.url);
+    next();
+});
+
+app.post('/api/account', (req, res) => {
+    console.log(req.body);
+
+    accountsData.push({
+        ...req.body,
+        salary: '---',
+    });
+
+    return res.json({
+        status: 'success',
+        message: 'Paskyra sekmingai sukurta',
+    });
+});
 
 app.get('/', (req, res) => {
     return res.send(pageHome());
