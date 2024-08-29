@@ -1,7 +1,7 @@
 import { footer } from "../components/footer.js";
 import { head } from "../components/head.js";
 import { header } from "../components/header.js";
-import { accountsData } from "../data/accountsData.js";
+
 
 export function pageCreateAccount() {
     const date = new Date();
