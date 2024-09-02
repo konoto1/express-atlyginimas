@@ -1,5 +1,5 @@
 import { accountsData } from '../../../data/accountsData.js';
-import { isName } from '../../../lib/validation.js';
+import { isName, isDate, isRate } from '../../../lib/validation.js';
 
 export function accountPost(req, res) {
     if (typeof req.body !== 'object'
@@ -9,34 +9,57 @@ export function accountPost(req, res) {
             status: 'error',
             message: 'Netinkamas duomenų tipas, turi būti objektas',
         });
-    }
+    };
 
-    const name = req.body.name;
-    const nameError = isName(name);
-    if (nameError !== '') {
+    const validation = {
+        name: {
+            func: isName,
+            trans: 'vardas',
+        },
+        date: {
+            func: isDate,
+            trans: 'isidarbinimo data',
+        },
+        rate: {
+            func: isRate,
+            trans: 'valandinis atlyginimas',
+        },
+    };
+
+    let sizeErrorMessage = '';
+    const keys = Object.keys(validation)
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        sizeErrorMessage += `${key} (${validation[key].trans})`;
+    };
+
+    if (keys.length > 1) {
+        if (i === keys.length - 2) {
+            sizeErrorMessage += ' ir ';
+        } else if (i < keys.length - 2) {
+            sizeErrorMessage += ', ';
+        };
+    };
+
+    const requiredDataKeysCount = Object.keys(validation).length;
+    if (Object.keys(req.body).length !== requiredDataKeysCount) {
         return res.json({
-            status: 'error',
-            message: nameError,
+            state: 'error',
+            message: `Netinkama duomenu struktura. Reikalinga: ` + sizeErrorMessage,
         });
-    }
+    };
 
-    const date = req.body.date;
-    // const dateError = isDate(date);
-    // if (dateError !== '') {
-    //     return res.json({
-    //         status: 'error',
-    //         message: dateError,
-    //     });
-    // }
-
-    const rate = req.body.rate;
-    // const rateError = isRate(rate);
-    // if (rateError !== '') {
-    //     return res.json({
-    //         status: 'error',
-    //         message: rateError,
-    //     });
-    // }
+    for (const key in validation) {
+        const value = req.body[key];
+        const valueError = validation[key].func(value);
+        if (valueError !== '') {
+            return res.json({
+                status: 'error',
+                message: nameError,
+            });
+        };
+        console.log(key);
+    };
 
     accountsData.push({
         ...req.body,

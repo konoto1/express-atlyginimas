@@ -7,9 +7,6 @@ const rateDOM = inputDOMs[2];
 
 formDOM.addEventListener('submit', e => {
     e.preventDefault();
-    console.log(nameDOM.value);
-    console.log(dateDOM.value);
-    console.log(rateDOM.value);
 
     const data = {
         name: nameDOM.value,
