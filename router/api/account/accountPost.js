@@ -31,13 +31,13 @@ export function accountPost(req, res) {
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         sizeErrorMessage += `${key} (${validation[key].trans})`;
-    };
 
-    if (keys.length > 1) {
-        if (i === keys.length - 2) {
-            sizeErrorMessage += ' ir ';
-        } else if (i < keys.length - 2) {
-            sizeErrorMessage += ', ';
+        if (keys.length > 1) {
+            if (i === keys.length - 2) {
+                sizeErrorMessage += ' ir ';
+            } else if (i < keys.length - 2) {
+                sizeErrorMessage += ', ';
+            };
         };
     };
 
