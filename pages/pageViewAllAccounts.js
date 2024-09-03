@@ -7,8 +7,16 @@ import { workingDaysCount } from "../lib/helpers.js";
 
 
 export function pageViewAllAccounts() {
-    const previousMonth = workingDaysCount(2024, 8);
-    const currentMonth = workingDaysCount(2024, 9);
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+
+    const previousYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+    const previousMonth = currentMonth - 1 || 12;
+
+    const workingHoursPerDay = 8;
+    const previousMonthWorkingDays = workingDaysCount(previousYear, previousMonth);
+    const currentMonthWorkingDays = workingDaysCount(currentYear, currentMonth);
 
     return `
         <!DOCTYPE html>
@@ -39,8 +47,8 @@ export function pageViewAllAccounts() {
                                 <td>${item.name}</td>
                                 <td>${item.date}</td>
                                 <td>${item.rate}</td>
-                                <td>${previousMonth} d.d. (${item.rate * previousMonth * 8} Eur)</td>
-                                <td>${currentMonth} d.d. (${item.rate * currentMonth * 8} Eur)</td>
+                                <td>${previousMonthWorkingDays} d.d. (${item.rate * previousMonthWorkingDays * workingHoursPerDay} Eur)</td>
+                                <td>${currentMonthWorkingDays} d.d. (${item.rate * currentMonthWorkingDays * workingHoursPerDay} Eur)</td>
                     </tr>`).join('')}
                     </tbody >
                 </table >
